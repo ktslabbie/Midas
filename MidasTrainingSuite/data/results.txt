@@ -1,0 +1,185 @@
+************************
+* Experimental results *
+************************
+
+Starting with 10 BTC, 0.00 USD
+All results have been obtained by running the "optimization mode" of the testing suite. 
+Profit is calculated by comparing the starting USD price of 10 BTC (Jul. 2012) with the USD value at the end of the period (Sep. 2013).
+
+Threshold parameters are in the following order:
+EMA buy | EMA sell | PPO cross speed buy | PPO cross speed sell | PPO non-cross speed buy | PPO non-cross speed sell | PPO rebound speed buy | PPO rebound speed sell
+
+=========================
+    LOW RISK PROFILE
+Avg. over 2-month periods
+=========================
+
+Optimize over 2012 1/7 01:00 - 2013 1/9 01:00 range, 2-month periods, 0.6% trading fee, 0.0% slippage correction:
+------------------------------
+EMA trading:
+1H, only EMA:						0.15 -0.80									Profit:  1632%,  73 trades
+2H, only EMA:						0.10 -0.85									Profit:  2137%,  47 trades
+3H, only EMA:						0.20 -0.35									Profit:  2282%,  59 trades
+4H, only EMA:						0.25 -0.05									Profit:  2722%,  55 trades
+
+Midas algorithm:
+1H samples, 1 indicator:			0.00 -0.95 0.85 0.45 1.10 0.45 1.30 1.65	Profit: 17420%, 105 trades
+2H samples, 1 indicator:			0.10 -0.40 0.25 0.40 0.70 0.70 1.40 1.30	Profit:  6863%, 115 trades
+3H samples, 1 indicator:			0.20 -0.65 0.20 0.20 0.30 0.25 1.20 1.55	Profit:  4915%, 113 trades
+4H samples, 1 indicator:			0.00 -0.10 0.65 0.85 0.85 1.30 1.05 1.50	Profit:  4921%,  89 trades
+
+With 4 time-shifted indicator pairs:
+1H samples, 1 EMA confirmation:		0.40 -0.95 0.75 0.35 1.05 0.45 1.30 1.10	Profit: 36136%, 141 trades
+1H samples, 2 EMA confirmations:	0.70 -0.95 0.75 0.30 0.95 0.50 1.30 1.10	Profit: 30995%, 141 trades
+1H samples, 3 EMA confirmations:	0.40 -0.75 0.75 0.35 0.90 0.45 1.30 1.10	Profit: 37585%, 147 trades
+1H samples, 4 EMA confirmations:	0.00 -0.70 0.75 0.50 1.15 1.40 1.30 1.70	Profit: 45384%, 131 trades
+								or: 0.00 -0.70 0.75 0.30 0.85 0.70 1.30 1.10	Profit: 47326%, 161 trades
+								or: 0.00 -0.70 0.75 0.35 0.75 0.70 1.30 0.75	Profit: 61656%, 185 trades
+
+2H samples, 1 EMA confirmation:		0.30 -0.45 0.35 0.20 0.70 0.85 2.50 1.15	Profit: 17961%, 129 trades
+2H samples, 2 EMA confirmations:	0.20 -0.85 0.35 0.35 1.05 0.35 2.55 1.10	Profit: 15968%,  99 trades
+2H samples, 3 EMA confirmations:	0.20 -0.35 0.35 0.35 0.75 0.35 2.35 1.15	Profit: 20140%, 117 trades
+2H samples, 4 EMA confirmations:	0.10 -0.25 0.35 0.35 0.80 0.10 2.40 1.25	Profit:  7259%, 221 trades
+
+4H samples, 2 EMA confirmations:	-0.05 0.05 0.90 0.75 1.05 1.10 1.50 1.05	Profit:  1480%,  67 trades
+
+
+
+With 0.6% trading fee, 0.28% slippage correction:
+------------------------------
+EMA trading:
+1H, only EMA:						0.15 -0.80									Profit:  1313%,  73 trades
+2H, only EMA:						0.10 -0.85									Profit:  1865%,  47 trades
+3H, only EMA:						0.20 -0.35									Profit:  1923%,  59 trades
+4H, only EMA:						0.25 -0.05									Profit:  2323%,  55 trades
+
+Midas algorithm:
+1H samples, 1 indicator:			0.00 -0.95 1.00 0.45 0.85 0.45 1.20 1.55	Profit: 12966%, 105 trades
+2H samples, 1 indicator:			0.45 -0.45 0.40 0.40 0.90 0.70 1.35 1.15	Profit:  4888%, 101 trades
+3H samples, 1 indicator:			0.20 -1.40 0.20 0.20 0.30 0.25 1.25 1.60	Profit:  2960%, 101 trades
+4H samples, 1 indicator:			0.05 -0.15 0.75 0.85 0.95 1.35 1.05 1.15	Profit:  3717%,  87 trades
+
+With 4 time-shifted indicator pairs:
+1H samples, 1 EMA confirmation:		0.75 -0.85 0.75 0.30 0.75 0.45 1.30 1.10	Profit: 18561%, 141 trades
+1H samples, 2 EMA confirmations:	0.70 -0.95 0.75 0.30 0.95 0.50 1.30 1.10	Profit: 20850%, 141 trades
+1H samples, 3 EMA confirmations:	0.40 -0.90 0.85 0.30 0.95 0.55 1.30 1.10	Profit: 21798%, 147 trades
+1H samples, 4 EMA confirmations:	0.00 -0.70 0.75 0.50 1.15 1.40 1.30 1.70	Profit: 31421%, 131 trades  <-- BOT DEFAULT (low-frequency)
+								or: 0.05 -0.70 0.75 0.35 1.10 0.70 1.30 1.10	Profit: 29659%, 153 trades  <-- BOT DEFAULT (neutral)
+								or: 0.00 -0.70 0.75 0.35 0.75 0.70 1.30 0.75	Profit: 36651%, 185 trades  <-- BOT DEFAULT (high-frequency)
+
+2H samples, 2 EMA confirmations:	0.20 -0.85 0.35 0.35 1.05 0.35 2.55 1.10	Profit: 12087%,  99 trades
+2H samples, 3 EMA confirmations:	0.40 -0.65 0.35 0.35 0.75 0.35 2.45 1.15	Profit: 15917%, 103 trades
+
+
+==========================================
+HIGH RISK PROFILE (A.K.A. OVERFIT PROFILE)
+     Train on full, 14-month period
+==========================================
+This will not likely give good results on unseen data, and is mostly intended for comparison with the above results.
+
+Optimize over full 2012 1/7 01:00 - 2013 1/9 01:00 14-month range, 0.6% trading fee, 0.0% slippage correction:
+------------------------------
+EMA trading:
+1H, only EMA:						2.00 -2.80									Profit:  2596%,  15 trades
+2H, only EMA:						0.10 -2.10									Profit:  2732%,  23 trades
+3H, only EMA:						0.00 -1.30									Profit:  3285%,  27 trades
+4H, only EMA:						0.10 -0.50									Profit:  3346%,  39 trades
+
+Midas algorithm:
+1H samples, 1 indicator:			0.00 -0.65 1.00 0.45 1.20 0.45 1.25 0.95	Profit: 18173%, 139 trades
+2H samples, 1 indicator:			0.10 -1.25 0.35 0.20 1.00 0.80 1.40 1.45	Profit:  8823%,  77 trades
+3H samples, 1 indicator:			0.20  0.15 0.35 0.15 0.25 0.85 1.30 1.45	Profit:  6144%,  93 trades
+4H samples, 1 indicator:			0.25 -0.20 0.65 0.85 1.10 1.45 0.85 1.65	Profit:  5126%,  81 trades
+
+With 4 time-shifted indicator pairs:
+1H samples, 1 EMA confirmation:		0.40 -1.05 0.90 0.50 0.85 0.40 1.30 1.10	Profit: 39623%, 129 trades
+1H samples, 2 EMA confirmations:	0.40 -1.15 0.75 0.50 1.10 0.40 1.30 1.65	Profit: 35069%, 119 trades
+1H samples, 3 EMA confirmations:	0.40 -0.75 0.75 0.40 0.95 0.45 1.30 1.10	Profit: 37819%, 141 trades
+1H samples, 4 EMA confirmations:	0.00 -0.70 0.75 0.50 0.95 0.90 1.30 0.75	Profit: 62596%, 171 trades <-- Theoretical high
+
+2H samples, 1 EMA confirmation:		0.30 -0.75 0.35 0.40 1.10 0.35 1.40 1.25	Profit: 20296%, 127 trades
+2H samples, 2 EMA confirmations:	0.20 -0.80 0.35 0.40 1.40 0.35 1.40 1.20	Profit: 20777%, 125 trades
+2H samples, 3 EMA confirmations:	0.25 -0.35 0.35 0.40 0.70 0.35 2.40 1.20	Profit: 21525%, 113 trades
+2H samples, 4 EMA confirmations:	0.10 -1.30 0.35 0.40 0.85 1.05 2.45 1.35	Profit: 20025%,  67 trades
+
+4H samples, 2 EMA confirmations:	0.55 -1.30 1.05 0.70 1.05 1.30 2.85 2.05	Profit:  2342%,  49 trades
+
+
+With 0.6% trading fee, 0.28% slippage correction:
+------------------------------
+EMA trading:
+1H, only EMA:						2.00 -2.80									Profit:  2492%,  15 trades
+2H, only EMA:						0.10 -2.10									Profit:  2561%,  23 trades
+3H, only EMA:						0.00 -1.30									Profit:  3046%,  27 trades
+4H, only EMA:						0.25 -0.50									Profit:  3003%,  37 trades
+
+Midas algorithm:
+1H samples, 1 indicator:			0.00 -0.95 1.00 0.45 0.95 0.45 1.20 1.60	Profit: 12966%, 105 trades
+2H samples, 1 indicator:			0.10 -1.25 0.35 0.40 0.70 0.60 1.35 1.40	Profit:  7163%,  67 trades
+3H samples, 1 indicator:			0.00 -1.00 0.20 0.95 0.30 0.80 1.05 1.55	Profit:  5215%,  69 trades
+4H samples, 1 indicator:			1.00 -1.00 1.10 1.05 0.80 0.90 1.05 2.15	Profit:  3849%,  51 trades
+
+With 4 time-shifted indicator pairs:
+1H samples, 1 EMA confirmation:		0.40 -1.05 0.85 0.50 1.15 0.40 1.75 1.10	Profit: 25463%, 111 trades
+1H samples, 2 EMA confirmations:	0.40 -1.15 0.90 0.50 1.35 0.40 1.80 1.10	Profit: 24608%, 109 trades
+1H samples, 3 EMA confirmations:	0.40 -0.90 0.85 0.30 0.95 0.55 1.30 1.10	Profit: 25080%, 109 trades
+1H samples, 4 EMA confirmations:	0.00 -0.70 0.75 0.50 1.15 0.90 1.30 0.75	Profit: 38713%, 171 trades
+
+2H samples, 2 EMA confirmations:	0.20 -1.30 0.35 0.40 1.15 0.95 2.55 1.40	Profit: 16182%,  63 trades
+4H samples, 2 EMA confirmations:	0.55 -1.30 1.05 0.70 1.05 1.30 2.85 2.05	Profit:  2032%,  49 trades
+
+
+
+
+**************************
+* Results on unseen data *
+**************************
+These are the trades made for the default settings over the Sep-Oct 2013 period.
+
+High-volume/low-frequency trade settings:
+2013 10/8 15:15:	Buy 10 BTC at price			$103.57 for	USD $1044.81
+2013 5/9 06:15: 	Sell 10 BTC at price		$133.99 for	USD $1328.11
+2013 8/9 01:30:		Buy 10.2661 BTC at price	$128.23 for	USD $1328.11
+2013 15/9 14:15: 	Sell 10.2661 BTC at price	$135.11 for	USD $1374.85
+2013 16/9 00:45:	Buy 9.8678 BTC at price		$138.10 for	USD $1374.85
+2013 20/9 03:30: 	Sell 9.8678 BTC at price	$134.55 for	USD $1316.02
+2013 23/9 09:00:	Buy 9.6696 BTC at price		$134.90 for	USD $1316.02
+2013 3/10 02:45: 	Sell 9.6696 BTC at price	$120.20 for	USD $1152.06
+2013 3/10 03:00:	Buy 10.3811 BTC at price	$110.00 for	USD $1152.06
+2013 3/10 04:00: 	Sell 10.3811 BTC at price	$128.85 for	USD $1325.84
+2013 4/10 06:15:	Buy 10.1826 BTC at price	$129.06 for	USD $1325.84
+2013 17/10 07:15: 	Sell 10.1826 BTC at price	$150.80 for	USD $1522.02
+
+Neutral settings:
+2013 10/8 16:15:	Buy 10 BTC at price			$103.60 for	USD $1045.12
+2013 1/9 08:30: 	Sell 10 BTC at price		$140.30 for	USD $1390.65
+2013 2/9 02:00:		Buy 9.3782 BTC at price		$146.98 for	USD $1390.65
+2013 5/9 06:15: 	Sell 9.3782 BTC at price	$133.99 for	USD $1245.54
+2013 8/9 02:30:		Buy 9.5106 BTC at price		$129.81 for	USD $1245.54
+2013 15/9 14:15: 	Sell 9.5106 BTC at price	$135.11 for	USD $1273.67
+2013 16/9 01:45:	Buy 9.0922 BTC at price		$138.85 for	USD $1273.67
+2013 20/9 03:30: 	Sell 9.0922 BTC at price	$134.55 for	USD $1212.58
+2013 23/9 09:45:	Buy 8.9249 BTC at price		$134.67 for	USD $1212.58
+2013 3/10 02:00: 	Sell 8.9249 BTC at price	$124.00 for	USD $1096.94
+2013 3/10 03:00:	Buy 9.8845 BTC at price		$110.00 for	USD $1096.94
+2013 3/10 04:00: 	Sell 9.8845 BTC at price	$128.85 for	USD $1262.41
+2013 4/10 07:15:	Buy 9.6416 BTC at price		$129.78 for	USD $1262.41
+2013 17/10 07:15: 	Sell 9.6416 BTC at price	$150.80 for	USD $1441.16
+
+Low volume/high-frequency trade settings:
+2013 10/8 15:15:	Buy 10 BTC at price			$103.57 for	USD $1044.81
+2013 31/8 00:45: 	Sell 10 BTC at price		$141.85 for	USD $1406.00
+2013 31/8 01:45:	Buy 10.1370 BTC at price	$137.48 for	USD $1406.00
+2013 1/9 08:30: 	Sell 10.1370 BTC at price	$140.30 for	USD $1409.70
+2013 2/9 02:00:		Buy 9.5068 BTC at price		$146.98 for	USD $1409.70
+2013 5/9 06:15: 	Sell 9.5068 BTC at price	$133.99 for	USD $1262.60
+2013 8/9 01:30:		Buy 9.7597 BTC at price		$128.23 for	USD $1262.60
+2013 15/9 14:15: 	Sell 9.7597 BTC at price	$135.11 for	USD $1307.03
+2013 16/9 00:45:	Buy 9.3811 BTC at price		$138.10 for	USD $1307.03
+2013 20/9 03:30: 	Sell 9.3811 BTC at price	$134.55 for	USD $1251.11
+2013 23/9 09:00:	Buy 9.1927 BTC at price		$134.90 for	USD $1251.11
+2013 3/10 02:30: 	Sell 9.1927 BTC at price	$124.00 for	USD $1129.86
+2013 3/10 03:00:	Buy 10.1811 BTC at price	$110.00 for	USD $1129.86
+2013 3/10 04:00: 	Sell 10.1811 BTC at price	$128.85 for	USD $1300.29
+2013 4/10 06:15:	Buy 9.9864 BTC at price		$129.06 for	USD $1300.29
+2013 17/10 07:15: 	Sell 9.9864 BTC at price	$150.80 for	USD $1492.69

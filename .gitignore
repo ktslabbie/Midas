@@ -1,0 +1,8 @@
+*.class
+Midas/.project
+Midas/.settings
+MidasTrainingSuite/.project
+MidasTrainingSuite/.settings
+MidasTrainingSuite/target/classes
+MidasTrainingSuite/target/maven-archiver
+.classpath

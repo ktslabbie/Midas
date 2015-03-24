@@ -1,0 +1,161 @@
+<html>
+<head>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.sparkline.min.js"></script>
+<style>
+#main {
+	overflow:auto;
+	width:524px;
+	max-height:500px;
+}
+#tab {
+	border-width: 1px;
+	border-spacing: 2px;
+	border-style: outset;
+	border-color: gray;
+	border-collapse:collapse;
+	background-color: white;
+	font-size: 14px;
+	width: 100%;
+}
+th {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	white-space: nowrap;
+	text-align: center;
+	background-color: black;
+	color: white;
+	font-weight:bold;
+	height:18px;
+}
+td {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	white-space: nowrap;
+	text-align: right;
+	width: 50px;
+	padding-right: 3px;
+}
+td.c {
+	padding:4px 3px;
+	text-align: center;
+	background-color: #d0d0d0;
+	color: blue;
+	font-weight:bold;
+	font-size:11px;
+}
+td.d {
+	padding:4px 0 ;
+	text-align: center;
+	background-color: #d0d0d0;
+	color: black;
+	font-size:11px;
+}
+td.err {
+	text-align: center;
+	background-color: #e0e0ff;
+	color: red;
+}
+#tradingStatus {
+	line-height:16px
+}
+.chartTooltip{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	visibility: hidden;
+	background: rgb(0, 0, 0) transparent;
+	background-color: rgba(0,0,0,0.6);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+	color: white;
+	font: 10px arial, san serif;
+	text-align: left;
+	white-space: nowrap;
+	padding: 5px;
+	border: 1px solid black;
+	z-index: 10000;
+	max-width:130px;
+	overflow:hidden;
+}
+.tooltipTableCell {
+	color: white;
+	font: 10px arial, san serif;
+	text-align: left;
+	white-space: nowrap;
+	width:100%;
+	padding:2px;
+}
+.trendIndicatorImg{
+	vertical-align:top;
+	margin:2px 3px 0px 3px;
+}
+.lnk {
+	color:#666;
+}
+.lnk span {
+	text-decoration:underline;
+	cursor:pointer;
+}
+</style>
+</head>
+<body>
+<div id="main">
+	<table id="tab" cellpadding="1" cellspacing="0" border="1">
+		<tr id="nobalan">
+			<td class="err" colspan="9">
+				Problem accessing MtGox account.<br>
+				Go check the <a href="options.html" target="_blank">Options page</a>.
+			</td>
+		</tr>
+		<tr id="balance">
+			<td class="c" colspan="9">
+				Balance = <span id="btc">0.00</span> BTC + <span id="usd">0.00</span><br>
+			</td width=20>
+		</tr>
+		<tr id="simulatedBalance">
+			<td class="c" colspan="9">
+				Simulated balance = <span id="simulatedBTC">0.00</span> BTC + <span id="simulatedFiat">0.00</span><br>
+			</td width=20>
+		</tr>
+		<tr id="settings">
+			<td class="d" colspan="9">
+				<span id="tradingEnabledStatus" style="display:none">
+					<span style="color:#008000"><b>Trading is enabled</b> <span class="lnk">(<span id="disableTrading" title="Disable trading">disable</span>)</span></span>
+				</span>
+				<span id="tradingDisabledStatus" style="display:none">
+					<span style="color:#A00000"><b>Trading is disabled</b> <span class="lnk">(<span id="enableTrading" title="Enable trading">enable</span>)</span></span>
+				</span>
+				<span style="position:relative;float:right">
+					<!-- <img src="chart.png" id="chartLink" alt="Chart" title="Chart" style="cursor:pointer;position:absolute;right:17px;margin:0 5px 0 0" border=0 width=15 height=12> -->
+					<a href="options.html" title="Options" target="bot_options" style="position:absolute;right:4px;">
+						<img src="options.png" alt="Options" title="Options" style="margin:-1px 0 0 0" border=0 width=13 height=13>
+					</a>
+				</span><br>
+				Sample interval: <span id="int"></span><br>
+				Buy EMA threshold: <span id="buyEMAThresID"></span>%&nbsp;&nbsp;&nbsp;&nbsp;Sell EMA threshold: <span id="sellEMAThresID"></span>%<br>
+				Buy PPO crossing speed: <span id="buyPPOCrossSpeedID"></span>&nbsp;&nbsp;&nbsp;&nbsp;Sell PPO crossing speed: <span id="sellPPOCrossSpeedID"></span><br>
+				Buy PPO non-crossing speed: <span id="buyPPOSpeedID"></span>&nbsp;&nbsp;&nbsp;&nbsp;Sell PPO non-crossing speed: <span id="sellPPOSpeedID"></span><br>
+				Buy PPO rebound speed: <span id="buyPPOReboundSpeedID"></span>&nbsp;&nbsp;&nbsp;&nbsp;Sell PPO rebound speed: <span id="sellPPOReboundSpeedID"></span><br>
+				
+				<span id="chart" style="width:100%;box-sizing:border-box;display:none;height:110px;background-color:#F0F0F0;border-top:1px solid gray;margin:6px 0 -4px 0;padding:4px 0">
+					<span id="EMAChart" style="max-width:310px;height:100px;box-sizing:border-box;margin:0">Loading...</span>
+					<div id="tooltipContiner" style="max-width:50px"></div>
+				</span>
+			</td>
+		</tr>
+		<tr>
+			<th>Time</th>
+			<th>Price</th>
+			<th colspan="2">EMA(<span id="emas">a</span>)/EMA(<span id="emal">b</span>)</th>
+			<th colspan="1">Diff %</th>
+			<th colspan="2">PPO(<span id="ppos">a</span>, <span id="ppol">a</span>, <span id="signal">a</span>)</th>
+			<th colspan="1">Diff</th>
+			<th colspan="1">Speed</th>
+		</tr>
+	</table>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>

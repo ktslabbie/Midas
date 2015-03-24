@@ -1,0 +1,339 @@
+<style>
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+table.top {
+	border: 2px solid black;
+	padding: 5px;
+	width:550px;
+	background-color:#F0F0C0;
+}
+.outer {
+	padding:20px;
+	vertical-align:top;	
+}
+table.top td {
+	font-size:12px;
+}
+
+sup {
+	font-size:70%;
+	color:red;
+	font-style:italic;
+	font-weight:bold;
+}
+.mono {
+	font-size:12px;
+	font-family:monospace;
+}
+.maxwide {
+	width:100%;
+}
+.l {
+	text-align:left;
+}
+.r {
+	text-align:right;
+}
+.note {
+	font-size:11px;
+	font-style:italic;
+}
+.info {
+	font-size:12px;
+	font-style:italic;
+}
+.stat {
+	text-align:center;
+}
+</style>
+<table border="0" style="width:100%; max-width:1800px">
+	<tr>
+		<td class="outer" style="width:33%;">
+			
+			<table cellpadding="2" class="top">
+				<form>
+					<tr>
+						<td nowrap="nowrap"><b>Exchange settings</b></td>
+					</tr>
+					<tr>
+					 <td nowrap="nowrap" style="vertical-align:top;padding-top:5px;">MtGox API Key<sup> 1</sup></td>
+					 <td>
+						<input type="text" size="36" id="apikey" class="mono maxwide">
+					 </td>
+					</tr>
+										
+					<tr>
+					 <td nowrap="nowrap" style="vertical-align:top;padding-top:5px;width:100px"><nobr>MtGox API Secret<sup> 1</sup>&nbsp;</nobr></td>
+					 <td>
+						<textarea id="apisec" cols="36" rows="3" class="mono maxwide"></textarea>
+					 </td>
+					</tr>
+
+
+					<tr>
+						<td nowrap="nowrap" style="padding-top:14px;"><b>Trading settings</b></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<div class="note stat" style="background-color:#E0E0B0;padding:6px 5px; line-height:15px">
+							<i>For safety reasons, trading is <b>disabled by default</b> and can only be enabled from the pop-up. 
+								Trading will also be automatically disabled when sample or indicator settings are changed, or when the bot or browser is restarted.<br>
+								Furthermore, <b>the bot will only trade on trading signals</b>. So even if trading is enabled in a long (buy) position with fiat in the account,
+								a buy isn't executed until we've gone back into a short (sell) position, and get a new buy signal again.</i>
+								</div>
+						</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap" style="vertical-align:top;padding-top:5px;">Sample interval</td>
+						<td>
+							<select id="tradingIntervalMinutes" class="mono">
+								<option value="60">1 hour</option>
+								<option value="120">2 hours</option>
+								<option value="180">3 hours</option>
+								<option value="240">4 hours</option>
+								<option value="360">6 hours</option>
+								<option value="720">12 hours</option>
+								<option value="1440">1 day</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">Sample interval time shift<sup> 2</sup></td>
+						<td><input type="text" size="3" maxlength="3" id="sampleTimeShiftID" class="mono r"> minutes</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap" style="vertical-align:top;padding-top:5px;">Show last</td>
+						<td>
+							<select id="showLast" class="mono">
+								<option value="24">1 day</option>
+								<option value="48">2 days</option>
+								<option value="72">3 days</option>
+								<option value="96">4 days</option>
+								<option value="120">5 days</option>
+								<option value="336">14 days</option>
+							<!--<option value="720">30 days</option>
+								<option value="2160">90 days</option>
+						 		<option value="4320">180 days</option>
+								<option value="8760">365 days</option>
+								<option value="10200">425 days</option>
+								<option value="11160">465 days</option>
+								<option value="11880">495 days</option> -->
+							</select>
+						</td>
+					</tr>
+
+					
+					
+					<tr>
+						<td nowrap="nowrap" style="padding-top:14px;"><b>Trend indicators</b></td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">EMA (Short EMA, Long EMA)</td>
+						<td>EMA(<input type="text" size="2" maxlength="2" id="emaShortID" class="mono r">, <input type="text" size="2" maxlength="2" id="emaLongID" class="mono r">)</td>
+					</tr>
+					
+					<tr>
+						<td nowrap="nowrap">PPO (short EMA, long EMA, signal)<sup> 3</sup></td>
+						<td>PPO(<input type="text" size="2" maxlength="2" id="ppoShortID" class="mono r">,
+							 <input type="text" size="2" maxlength="2" id="ppoLongID" class="mono r">, 
+							 <input type="text" size="2" maxlength="2" id="signalID" class="mono r">)</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap"># of time-shifted indicators<sup> 4</sup></td>
+						<td><input type="text" size="2" maxlength="2" id="numberOfEMAsID" class="mono r"></td>
+					</tr>
+					
+					
+					
+					<tr>
+						<td nowrap="nowrap" style="padding-top:14px;"><b>Conditionals</b></td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">EMA difference thresholds<sup> 5</sup></td>
+						<td>
+							Buy: <input type="text" size="5" maxlength="5" id="emaBuyThresID" class="mono r"> 
+							Sell: <input type="text" size="5" maxlength="5" id="emaSellThresID" class="mono r"></td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">PPO cross speed thresholds<sup> 6</sup></td>
+						<td>
+							Buy: <input type="text" size="5" maxlength="5" id="ppoCrossBuyThresID" class="mono r"> 
+							Sell: <input type="text" size="5" maxlength="5" id="ppoCrossSellThresID" class="mono r"></td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">PPO non-cross speed thresholds<sup> 7</sup></td>
+						<td>
+							Buy: <input type="text" size="5" maxlength="5" id="ppoBuyThresID" class="mono r"> 
+							Sell: <input type="text" size="5" maxlength="5" id="ppoSellThresID" class="mono r"></td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">PPO rebound speed thresholds<sup> 8</sup></td>
+						<td>
+							Buy: <input type="text" size="5" maxlength="5" id="ppoReboundSpeedBuyThresID" class="mono r"> 
+							Sell: <input type="text" size="5" maxlength="5" id="ppoReboundSpeedSellThresID" class="mono r"></td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">EMA cross confirmations<sup> 9</sup></td>
+						<td>Trade after <input type="text" size="2" maxlength="1" id="emaConfirmationsID" class="mono r"> time-shifted EMAs<br>have crossed thresholds in one round</td>
+					</tr>
+					
+					
+					
+					<tr>
+						<td nowrap="nowrap" style="padding-top:14px;"><b>Currency settings</b></td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">Fiat currency</td>
+						<td>
+							<select id="currencyID" class="mono">
+								<option value="USD">USD</option>
+								<option value="EUR">EUR</option>
+								<option value="GBP">GBP</option>
+								<option value="JPY">JPY</option>
+								<option value="AUD">AUD</option>
+								<option value="CAD">CAD</option>
+								<option value="CHF">CHF</option>
+								<option value="CNY">CNY</option>
+								<option value="DKK">DKK</option>
+								<option value="HKD">HKD</option>
+								<option value="PLN">PLN</option>
+								<option value="RUB">RUB</option>
+								<option value="SEK">SEK</option>
+								<option value="SGD">SGD</option>
+								<option value="THB">THB</option>
+								<option value="NOK">NOK</option>
+								<option value="CZK">CZK</option>
+							</select>
+							<!-- <input type="text" size="4" id="currencyID" class="mono"> -->
+						</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">Funds to keep in wallet <sup> 10</sup></td>
+						<td>Fiat: <input type="text" size="8" maxlength="8" id="keepFiat" class="mono" > 
+						    BTC: <input type="text" size="8" maxlength="8" id="keepBTC" class="mono"></td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">Starting fiat/BTC amounts<br>(simulation mode)</td>
+						<td>Fiat: <input type="text" size="8" maxlength="8" id="virtualFiatID" class="mono">
+						    BTC: <input type="text" size="8" maxlength="8" id="virtualBTCID" class="mono"></td>		
+					</tr>
+					
+					<tr>
+					 <td colspan="2" align="center" style="padding-top:15px;">
+					  <input type="button" style="width:260px;" id="butreshigh" value="Reset to low-frequency trading defaults">
+					  <input type="button" style="width:260px;" id="butres" value="Reset to neutral defaults">
+					  <input type="button" style="width:260px;" id="butreslow" value="Reset to high-frequency trading defaults">
+					  <input type="submit" style="width:260px; font-weight:bold;" id="butsav" value="Apply and save changes">
+					 </td>
+					
+				</form>
+			</table>
+		</td>
+		<td style="width:67%; vertical-align:top;">
+			<table cellpadding="2" border="0" style="width:100%; ">
+				<tr>
+					<td class="outer" style="width:60%;">
+						<div class="info">
+							Read <a href="https://bitcointalk.org/index.php?topic=60501" target="_blank">Goomboo's Journal</a> to learn about the fundamental EMA trading strategy that this trading bot was built upon. 
+							This bot adds various additional conditionals and indicators to maximize expected profits.
+							What the algorithm essentially aims to do is to <u>trade conservatively during periods of low volatility, and aggressively during periods of high volatility.</u>
+						</div>
+						<hr>
+						<div class="note">
+							<sup>1</sup>
+							Take <b>API Key</b> and <b>Secret</b> from your MtGox account. 
+							Use <b>Advanced API Key Creation</b> at the <a href="https://mtgox.com/security" target="_blank">Security Center</a> page to create these values. 
+							Make sure to grant only <b>get_info</b> and <b>trade</b> access rights for this API key. The bot does not need you to be logged into the MtGox account - just set up the Key and Secret, leave the browser running and it will trade.<br><br>
+							<sup>2</sup>
+							<b>Sample interval time shift</b>: price sampling is usually done at the full hour. This option allows you to shift this interval by x minutes (can be positive or negative). 
+							<u>Example:</u> if we enter "-5", rather than checking the current price and making a decision whether to trade at e.g. 18:00, the bot will now do this at 17:55. 
+							A possible use of this feature is to "outsmart" other algorithmic traders.
+							<br><br>
+							<sup>3</sup>
+							<b>PPO (Percentage Price Oscillator)</b>: This is simply a normalized version of <a href="http://en.wikipedia.org/wiki/MACD" target="_blank">MACD</a>.
+							Used to react to sudden price movements quicklier than EMA.
+							<br><br>
+							<sup>4</sup>
+							<b># of time-shifted indicators</b>: number of indicators (EMA/PPO pairs) to use: each with the same sample interval, but shifted in sample timing.
+							<u>Example:</u> with a sample interval of 2 hours and 4 time-shifted indicators, we check prices and update 4 separate indicators at 18:00, 18:30, 19:00, 19:30 for a single round.
+							At 20:00, the next round starts: indicator 1 will be updated with respect to the previous price at 18:00. At 20:30, indicator 2 is updated with respect to 18:30. Etcetera. 
+							<br><br>
+							<sup>5</sup>
+							<b>EMA difference thresholds</b>: buy/sell when an EMA crosses the defined thresholds. 
+							<br><br>
+							<sup>6</sup>
+							<b>PPO cross speed thresholds</b>: buy/sell when a PPO cross with its signal line occurs, and the speed of crossing (PPO value - previous PPO value) exceeds these thresholds.
+							Intuitively - as well as according to historical data - sudden, extreme price movements up or down tend to lead to short or long term trend reversals.
+							This conditional ensures we can get in/out quickly enough, while filtering out most false signals.
+							After this conditional has triggered a buy or sell, but PPO crosses again in the opposite direction while EMA is still in a sell or buy state, 
+							we consider the signal to have been false and sell or buy again regardless of crossing speed.
+							<br><br>
+							<sup>7</sup>
+							<b>PPO non-cross speed thresholds</b>: buy/sell when the PPO speed (PPO value - previous PPO value) exceeds these thresholds regardless of a cross.
+							Buys only trigger if PPO has already crossed positively, sells only trigger if PPO has already crossed negatively.
+							This conditional is a backup for the PPO cross conditional, to deal with cases where a sudden large drop/rise occurs while PPO has already crossed earlier.
+							<br><br>
+							<sup>8</sup>
+							<b>PPO rebound speed thresholds</b>: buy/sell when PPO (and therefore price) falls/rises at an extreme, unsustainable speed. A significant price rebound can be expected to occur more often than not.
+							Note that we sell when it rises, hoping to pick the top, and buy when it dives, hoping to pick the bottom.
+							After this conditional triggers, trading is halted for 1 {sample interval} period of time, to avoid instant re-buying/selling.
+							<br><br>
+							<sup>9</sup>
+							<b>EMA cross confirmations</b>: execute trades based on EMA differences only if at least this number of (time-shifted) EMAs have crossed thresholds in a single sample interval.
+							This provides a balance between filtering out false signals and reacting quickly to trend changes. 
+							<br><br>
+							<sup>10</sup>
+							The bot will buy bitcoins for the <u>whole amount of fiat money</u> minus the value of <b>Fiat to keep in wallet</b> (currently only supported for USD),
+								or sell <u>all bitcoins</u>, minus the value of <b>BTC to keep in wallet</b> at the given account.
+						</div>
+					</td>
+					<td class="outer" style="width:40%;">
+						<div style="font-size: 14px; font-weight: bold;">Mini manual:</div>
+						<div class="note" style="background-color:#F0F0F0;padding:5px 5px; margin-top:10px; line-height:15px; border: 2px solid black;">
+						<b>Basic operation</b><br>
+						When the bot is first started, the past ~14 days (depending on the sample interval) of data is collected from the exchange, and indicator values are calculated.
+						This takes a bit of time the first time, but all samples are stored locally, so loading them will be much faster every subsequent time.
+						The pop-up will show data collection progress. Any buys/sells that would have been made will be reflected in the "simulated BTC/USD"; real trading is disabled. 
+						When data collection is completed, date, price and indicator values will be shown in the pop-up window. The bot will continue updating the price and indicator 
+						values according to the sample interval set. The bot is fixed to update 5 seconds after a full minute (so if we get a new sample at say 14:00, actual sampling 
+						is done at 14:00:05). If no trade was yet made in these 5 seconds, we try again in 15 seconds until we find a trade, which will be the current price.
+						<br><br>
+						<b>Pop-up window</b><br>
+						The current real and virtual balances are shown in blue at the top (real balance is only shown if a working exchange API key has been provided). Below that is 
+						current active data (sample period, thresholds etc.) as chosen in this options screen. The table below this shows date, price, EMA/PPO values and differences 
+						for each sample over at most the last 14 days (or any other time period selected). Time-shifted indicators are color-coded with blue-ish hues. For example, 
+						with four indicators, there will be four different hues, with each hue representing the same indicator. (Currently there is a small bug in that colors are not 
+						correctly shown when using some uneven sample interval time shifts (e.g. -1). This is purely cosmetic and will be fixed when I get around to it). When EMA or
+						 PPO difference goes below or above 0, it will get a light red or light green color respectively. If either passes a threshold value, it will be shown in dark
+						 red or dark green. This is where a sell or buy will occur.
+						
+						</div>
+						<br>
+						<hr>
+						<br>
+						<div class="note stat" style="background-color:#F0F0C0;padding:5px 5px; margin-top:0px; ">
+							Midas is a fork of https://github.com/TobbeLino/GoxTradingBotTobli, which in turn is a fork of https://github.com/virtimus/GoxTradingBot/, 
+							which in turn is based off yet another (now deleted) project.<br>
+							If you've made some profit with the bot, consider donating <br>some BTCs to the original creators virtimus <br>(<b>13g6zY7GJJvKEiYzTnGP8H9dEDEhYW2jFq</b>), <br>
+							and/or TobbeLino <br>(<b>1LUqdAXvH9gbYemZKeiMrVJ5njhm6ZvKmF</b>), respectively.<br>
+							They deserve a piece of the pie :)
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="outer" style="padding-top: 0px;">
+						<div style="font-size:11px;">
+							<div style="padding-bottom: 4px;"><b>Log window</b><br>
+							<i>(note: in Windows 7, the full log history can be found in C:\Users\{UserName}\AppData\Local\Google\Chrome\User Data\Default\File System\{some number}\p\00)</i></div>
+							<div id="logWindow" spellcheck="false" draggable="true" style="width:100%; height: 162px; overflow: auto; border: 1px solid black; padding: 2px; color: #666666"></div>
+							<!-- <textarea id="logWindow" rows="10" cols="1" readonly="readonly" contenteditable="false" draggable="false" style="width:100%;"></textarea> -->
+						</div>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<script src="options.js"></script>
