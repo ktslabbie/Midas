@@ -37,7 +37,7 @@ public class MidasTrainingSuite {
 	/**
 	 * Main method. Called without arguments - change parameters in the midas.properties file.
 	 * 
-	 * @param args
+	 * @param args No args needed.
 	 */
 	public static void main(String[] args) {
 		Log.getLogger().info("Starting program.");
@@ -353,7 +353,7 @@ public class MidasTrainingSuite {
 				currentYear = tick.getDate().split(" ")[0];
 
 				if(!newMonth.equals(currentMonth)) {
-					if(currentMonth != "") {
+					if(!currentMonth.isEmpty()) {
 						double usdValue = (USD == 0.0) ? prevUSD : USD;
 
 						if(logging) monthlyLog += "Profit for " + currentYear + " 1/" + currentMonth + " to 1/" + newMonth + "\tBTC: " + format(2, btcMonthlyProfit) + "%\tUSD: " + format(2, usdMonthlyProfit) + "%\t" +
@@ -596,7 +596,7 @@ public class MidasTrainingSuite {
 	/**
 	 * Calculate USD profit (in %) from selling BTC at current price compared to the previously held amount of USD.
 	 * 
-	 * @param price
+	 * @param price The BTC price
 	 */
 	private static void calculateUSDProfit(double price) {
 		usdProfit = ((BTC * price)*(1-tradingFee) - prevUSD) / prevUSD * 100;
@@ -606,7 +606,7 @@ public class MidasTrainingSuite {
 	/**
 	 * Calculate BTC profit (in %) from re-buying BTC at current price compared to the previously held amount of BTC.
 	 * 
-	 * @param price
+	 * @param price The BTC price
 	 */
 	private static void calculateBTCProfit(double price) {
 		btcProfit = ((USD / price)*(1-tradingFee) - prevBTC) / prevBTC * 100;
@@ -661,7 +661,7 @@ public class MidasTrainingSuite {
 	/**
 	 * Turn a space-separated parameter string into assigned global variables. 
 	 * 
-	 * @param parameters
+	 * @param parameters The space-separated parameter string
 	 */
 	private static void applyParameters(String parameters) {
 		String[] params = parameters.split(" ");
@@ -678,7 +678,7 @@ public class MidasTrainingSuite {
 	/**
 	 * Update the current (best) parameters to -step Min and +step Max (for optimization mode).
 	 * 
-	 * @param step
+	 * @param step The step
 	 */
 	private static void updateStep(double step) {
 		Vars.step = step;
@@ -725,9 +725,9 @@ public class MidasTrainingSuite {
 		File multiFile = new File(dataFilePath);
 
 		for (int i = 0; i < emaCount; i++) {
-			File file = multiFile.listFiles()[i];
-			List<Tick> points = parseInput(file.getPath());
-			emas.add(points);
+            File file = multiFile.listFiles()[i];
+            List<Tick> points = parseInput(file.getPath());
+            emas.add(points);
 		}
 
 		return emas;
@@ -736,7 +736,7 @@ public class MidasTrainingSuite {
 	/**
 	 * Parse input data file of space-seperated values (copy/pasted from the bot output in Chrome).
 	 * 
-	 * @param lines
+	 * @param filePath The path
 	 * @return A list of IndicatorTick objects
 	 */
 	private static List<Tick> parseInput(String filePath) {

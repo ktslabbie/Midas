@@ -16,7 +16,7 @@ import util.Log;
  */
 public class Configuration {
 	
-	public static final String PROPERTIES = "midas.properties";
+	public static final String PROPERTIES = "MidasTrainingSuite/midas.properties";
 	private static Configuration instance;
 	private final Properties props;
 	
